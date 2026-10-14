@@ -2,30 +2,20 @@
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
-#include <string>
 
 using namespace std;
 
 int main() {
-    srand(static_cast<unsigned int>(time(0)));
+    srand(time(0));
 
-    for (int i = 1; i <= 3; ++i) {
-        string filename = "file" + to_string(i) + ".txt";
-        ofstream outFile(filename);
+    const char* files[] = { "file1.txt", "file2.txt", "file3.txt" };
 
-        if (!outFile.is_open()) {
-            cerr << "Ошибка открытия файла " << filename << endl;
-            continue;
-        }
-
+    for (int i = 0; i < 3; ++i) {
+        ofstream f(files[i]);
         for (int j = 0; j < 10; ++j) {
-            int randomNum = rand() % 10 + 1;
-            outFile << randomNum;
-            if (j < 9) outFile << " ";
+            f << rand() % 10 + 1 << (j < 9 ? " " : "\n");
         }
-        outFile << endl;
-        outFile.close();
-        cout << "Файл " << filename << " создан." << endl;
+        cout << "Файл " << files[i] << " создан." << endl;
     }
 
     return 0;
